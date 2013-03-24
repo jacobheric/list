@@ -1,0 +1,50 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+	font-size: 3em;
+    padding: 0;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;
+}
+
+#outer {
+    margin: 0 auto;    
+}
+
+.thing {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.thing .name {
+    font-size: 1.75em;
+	width: 80%;
+	border-style: none	
+}
+
+.thing.selected {
+    background-color: yellow;
+}
+
+.thingInput {
+	height: 4em;
+	width: 80%;
+}
+
+.delete {
+	display: inline-block;
+	border-style: none dashed none none;
+	border-color: #ccc;
+	border-width: 2px;
+	padding-right: 5px;
+}
+
+.none {
+    color: #777;
+}

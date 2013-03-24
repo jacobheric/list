@@ -1,0 +1,28 @@
+<head>
+  <title>Heric List</title>
+</head>
+
+<body>
+  <div id="outer">
+    {{> list}}
+  </div>
+</body>
+
+<template name="list">
+	<input class="thingInput"/>
+	<div class="list">
+		{{#each things}}
+			{{> thing}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="thing">
+  <div class="thing {{selected}}">
+	<div class="delete">		
+		<img src="/icons/delete_med.png">
+	</div>	
+    <input class="name" value="{{name}}"/>
+  </div>
+</template>
+
