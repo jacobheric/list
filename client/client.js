@@ -12,9 +12,7 @@ Template.list.things = function () {
 Template.list.events = {
 	'keyup input.thingInput': function(event, template) {
 		if (event.keyCode === 13){ 
-			var element = template.find(".thingInput");
-			element.blur();
-			//alert(element.value);
+			var element = event.target;
 			var n = element.value;
 			if (n){
 				n = n.toLowerCase();
@@ -33,8 +31,7 @@ Template.list.events = {
 	},
 	'keyup input.name': function(event, template) {
 		if (event.keyCode === 13){ 
-			var element = template.find(".name");
-			element.blur();			
+			var element = event.target
 			var n = element.value;
 			if (n){
 				n = n.toLowerCase();
