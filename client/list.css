@@ -14,7 +14,7 @@ body {
 }
 
 #outer {
-    margin: 0 auto;    
+	margin: 0 auto; 
 }
 
 .thing {
@@ -23,8 +23,7 @@ body {
 }
 
 .thing .name {
-    font-size: 1.75em;
-	width: 80%;
+    font-size: .75em;
 	border-style: none	
 }
 
@@ -33,8 +32,8 @@ body {
 }
 
 .thingInput {
-	font-size: 1em;
-	width: 80%;
+	font-size: .75em;
+	width: 99%;
 }
 
 .delete {
@@ -43,6 +42,10 @@ body {
 	border-color: #ccc;
 	border-width: 2px;
 	padding-right: 5px;
+}
+
+.deleteImage {
+	vertical-align: text-bottom;	
 }
 
 .none {

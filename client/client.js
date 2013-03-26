@@ -27,23 +27,23 @@ Template.list.events = {
 		}
 	},
 	'click div.delete': function() {
-		Things.remove(this._id);
+		deleteThing(this._id);
 	},
-	'keyup input.name': function(event, template) {
-		if (event.keyCode === 13){ 
-			var element = event.target
-			var n = element.value;
-			if (n){
-				n = n.toLowerCase();
-			}
-			
-			Things.update(this._id, {
-					name: n
-				});
-		}
-	},	
-	
+	'click span.name': function(event, template){
+		//
+		//Editing is accomplished by removing the current 
+		//item from the list & putting it back in the edit field
+		var input = template.find('.thingInput');
+		input.value = event.target.textContent;
+		deleteThing(this._id);
+		input.focus();
+		
+	}	
 };
+
+var deleteThing = function(id){
+	Things.remove(id);	
+}
 
 
 
