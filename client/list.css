@@ -19,7 +19,7 @@ body {
 
 .thing {
     cursor: pointer;
-    padding: 5px;
+    padding: 0 5px;
 }
 
 .thing .name {
@@ -32,8 +32,10 @@ body {
 }
 
 .thingInput {
+	vertical-align: text-top;
+	box-sizing: border-box; 		
 	font-size: .75em;
-	width: 99%;
+	width: 100%;
 }
 
 .delete {
