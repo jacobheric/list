@@ -32,10 +32,10 @@ body {
 }
 
 .thingInput {
-	vertical-align: text-top;
-	box-sizing: border-box; 		
-	font-size: .75em;
-	width: 100%;
+	vertical-align: text-top !important;
+	box-sizing: border-box !important;
+	font-size: .75em !important;
+	width: 100% !important;
 }
 
 .delete {

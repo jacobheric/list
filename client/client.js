@@ -1,4 +1,8 @@
 
+//
+//Subscriptions
+Meteor.subscribe("things");
+
 Template.list.things = function () {
   return Things.find({}, 
 	{
@@ -17,17 +21,16 @@ Template.list.events = {
 			if (n){
 				n = n.toLowerCase();
 			}
-			var th = Things.findOne({name: n});
+
+			var th = Things.findOne({name: n});			
 			if (!th){
-				Things.insert({
-						name: n
-					});
+				Meteor.call('createListItem', {name: n});
 			}
 			element.value = '';
 		}
 	},
 	'click div.delete': function() {
-		deleteThing(this._id);
+		removeItem(this._id);
 	},
 	'click span.name': function(event, template){
 		//
@@ -35,14 +38,14 @@ Template.list.events = {
 		//item from the list & putting it back in the edit field
 		var input = template.find('.thingInput');
 		input.value = event.target.textContent;
-		deleteThing(this._id);
+		removeItem(this._id);
 		input.focus();
 		
 	}	
 };
 
-var deleteThing = function(id){
-	Things.remove(id);	
+var removeItem = function(id){
+	Meteor.call('removeListItem', id);
 }
 
 
