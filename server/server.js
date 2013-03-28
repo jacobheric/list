@@ -1,15 +1,11 @@
-Meteor.startup(function() {
-	
+// Publish complete set of lists to all clients.
+Meteor.publish('lists', function () {
+  return Lists.find();
 });
 
-
-Meteor.publish("things", function () {
-	
-	return Things.find({},{
-		sort: {
-			name: 1
-		}
-	});
+// Publish all items for requested list_id.
+Meteor.publish('things', function (id) {
+  return Things.find({list_id: id});
 });
 
 
@@ -23,5 +19,29 @@ Meteor.methods({
 	},
 	removeListItem: function (id) {
 		Things.remove(id);
-	}
+	},
+	createNewList: function(){
+		return createList();
+	},
+	getList: function(id){
+		return Lists.findOne(id);
+	}, 
+	//
+	//Grab existing or create
+	// initList: function(id){		
+	// 	var list = Lists.findOne(id);
+	// 	if (list){
+	// 		console.log('found list');			
+	// 		return list;
+	// 	} 
+	// 	else {
+	// 		console.log('inserting list');
+	// 		return createList();
+	// 	}		
+	// }
+	
 });
+
+var createList = function createList(){
+	return Lists.insert({});
+}

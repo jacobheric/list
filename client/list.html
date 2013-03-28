@@ -5,6 +5,9 @@
 
 <body>
   <div id="outer">
+	{{#if loading}}
+		<div class="loading">...Loading...</div>
+	{{/if}}	
     {{> list}}
   </div>
 </body>
