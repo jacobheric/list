@@ -39,7 +39,6 @@ body {
 }
 
 .delete {
-	display: inline-block;
 	border-style: none dashed none none;
 	border-color: #ccc;
 	border-width: 2px;

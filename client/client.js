@@ -14,10 +14,13 @@ Template.list.events = {
 	'keyup input.thingInput': function(event, template) {
 		if (event.keyCode === 13){ 
 			var element = event.target;
-			var n = element.value;			
-			if (n){
-				n = n.toLowerCase();
+			var n = element.value;	
+					
+			if (!n || n == ''){
+				return;
 			}
+			
+			n = n.toLowerCase();			
 			
 			var th = Things.findOne({list_id: Session.get('list_id'), name: n});			
 			if (!th){
@@ -31,15 +34,55 @@ Template.list.events = {
 	'click div.delete': function() {
 		removeItem(this._id);
 	},
-	'click span.name': function(event, template){
+	'click div.name': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');
 		input.value = event.target.textContent;
 		removeItem(this._id);
 		input.focus();
-	}	
+	}
+	
 };
+
+Template.thing.rendered = function(template){
+	
+	var element = this.find('.thingContainer');
+	var id = this.data._id;
+	if (element) {
+		
+		var hammertime = Hammer(element).on("dragleft", function(ev, id) {
+			
+			var touches = ev.gesture.touches;
+			ev.gesture.preventDefault();
+			//
+			//Hokey: current doc id is bound to dom el id 
+			//cause we don't have it in this contex
+			var docId = ev.target.id;
+			
+			for (var t = 0, len = touches.length; t < len; t++) {
+				var target = $(touches[t].target);
+				
+				target.css({
+					left: touches[t].pageX - 50
+				});
+			}
+			
+			removeItem(docId);
+		});
+		
+	}
+
+}
+
+
+// Template.thing.aThing = function () {
+//   Meteor.defer(function() {
+//     
+// 	alert('help');
+// 	
+//   });
+// };
 
 var removeItem = function(id){
 	Meteor.call('removeListItem', id);
