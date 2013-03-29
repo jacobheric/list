@@ -1,7 +1,7 @@
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 200;
-	font-size: 3em;
+	font-size: 2.5em;
     padding: 0;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -17,20 +17,6 @@ body {
 	margin: 0 auto; 
 }
 
-.thing {
-    cursor: pointer;
-    padding: 0 5px;
-}
-
-.thing .name {
-    font-size: .75em;
-	border-style: none	
-}
-
-.thing.selected {
-    background-color: yellow;
-}
-
 .thingInput {
 	vertical-align: text-top !important;
 	box-sizing: border-box !important;
@@ -38,17 +24,38 @@ body {
 	width: 100% !important;
 }
 
+.thingContainer {
+	padding-bottom: px;
+}
+
+.thingContainer .name {	
+	position:relative;
+	border-style: none;
+}
+
 .delete {
+	float: left;
 	border-style: none dashed none none;
 	border-color: #ccc;
 	border-width: 2px;
 	padding-right: 5px;
+	margin-right: 5px;	
 }
 
 .deleteImage {
-	vertical-align: text-bottom;	
+	vertical-align: middle;	
 }
 
 .none {
-    color: #777;
+	color: #777;
+}
+
+@media screen and (max-width: 480px)  
+{
+	.delete { display: none; }
+	.thingContainer{
+		border-style: none none dashed none;
+		border-color: #ccc;
+		border-width: 2px;		
+	}
 }
