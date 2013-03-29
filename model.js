@@ -4,7 +4,7 @@ Lists = new Meteor.Collection("lists");
 
 Things.allow({
 	insert: function() {
-		return false;
+		return true;
 	},
 	update: function() {
 		return false;

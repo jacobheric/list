@@ -20,29 +20,31 @@ Template.list.events = {
 				return;
 			}
 			
-			n = n.toLowerCase();			
+			n = n.toLowerCase().substring(0, 125);			
 			
 			var th = Things.findOne({list_id: Session.get('list_id'), name: n});			
 			if (!th){
-				Meteor.call('createListItem', 
-					{list_id: Session.get('list_id'), name: n}
-				);
+				Things.insert({list_id: Session.get('list_id'), name: n});				
+				//
+				//This is too laggy, revisit security
+				//Meteor.call('createListItem', 
+				//	{list_id: Session.get('list_id'), name: n}
+				//);
 			}
 			element.value = '';
 		}
 	},
-	'click div.delete': function() {
+	'click .delete': function() {
 		removeItem(this._id);
 	},
-	'click div.name': function(event, template){
+	'click .name': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');
 		input.value = event.target.textContent;
 		removeItem(this._id);
 		input.focus();
-	}
-	
+	}	
 };
 
 Template.thing.rendered = function(template){
@@ -59,30 +61,21 @@ Template.thing.rendered = function(template){
 			//Hokey: current doc id is bound to dom el id 
 			//cause we don't have it in this contex
 			var docId = ev.target.id;
-			
+		
 			for (var t = 0, len = touches.length; t < len; t++) {
 				var target = $(touches[t].target);
 				
 				target.css({
-					left: touches[t].pageX - 50
+					left: touches[t].pageX - 250
 				});
 			}
-			
+						
 			removeItem(docId);
 		});
 		
 	}
-
 }
 
-
-// Template.thing.aThing = function () {
-//   Meteor.defer(function() {
-//     
-// 	alert('help');
-// 	
-//   });
-// };
 
 var removeItem = function(id){
 	Meteor.call('removeListItem', id);
