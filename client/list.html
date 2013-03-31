@@ -5,15 +5,15 @@
 
 <body>
   <div id="outer">
-	{{#if loading}}
-		<div class="loading">...Loading...</div>
-	{{/if}}	
     {{> list}}
   </div>
 </body>
 
 <template name="list">
 	<input class="thingInput" type="text" maxlength="125"/>
+	{{#if showGuide}}
+		{{>guide}}
+	{{/if}}	
 	<div class="list">
 		{{#each things}}
 			{{> thing}}
@@ -30,3 +30,9 @@
 	</div>
 </template>
 
+<template name="guide">
+	<div class="guide animated shake">
+		<span>&#8592; swipe list items left to delete</span>
+		<a>&#8855;</a>
+	</div>
+</template>
