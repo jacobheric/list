@@ -5,11 +5,14 @@
 
 <body>
   <div id="outer">
-    {{> list}}
+	{{> list}}
   </div>
 </body>
 
 <template name="list">
+	{{#if loading}}
+		<div/>
+	{{/if}}	
 	<input class="thingInput" type="text" maxlength="125"/>
 	{{#if showGuide}}
 		{{>guide}}

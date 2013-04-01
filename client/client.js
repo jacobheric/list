@@ -2,6 +2,45 @@ Meteor.subscribe("lists");
 // show guide is false by default
 Session.setDefault('showGuide', false);
 
+// Subscribe to 'lists' collection on startup.
+// Select a list once data has arrived.
+var listsHandle = Meteor.subscribe('lists', function () {
+	//
+	//Check for our show guide token
+	if (Session.get('list_id')){
+		var l = Lists.findOne(Session.get('list_id'));
+		
+		if (l && l.showGuide && l.showGuide == true){
+			Session.set('showGuide', true);
+		}
+	}
+	else {
+		var id = Lists.insert({showGuide: true});
+		Session.set('list_id', id);
+		Session.set('showGuide', true);
+		
+		if (id) {
+			Router.setList(id);
+		}
+	}
+});
+
+Deps.autorun(function () {
+	var list_id = Session.get('list_id');
+	
+	if (list_id) {
+		thingsHandle = Meteor.subscribe('things', Session.get('list_id'));
+	}
+	else {
+		thingsHandle = null;
+	}
+});
+
+Template.list.loading = function () {
+  return !listsHandle.ready();
+};
+
+
 Template.list.things = function () {	
 	return Things.find(
 		{list_id: Session.get('list_id')}, 
@@ -111,32 +150,7 @@ var ListRouter = Backbone.Router.extend({
 Router = new ListRouter;
 
 Meteor.startup(function () {		
-	
 	Backbone.history.start({pushState: true});		
-			
-	if (!Session.get('list_id')){
-		var id = Lists.insert({showGuide: true});
-		Session.set('list_id', id);
-		Session.set('showGuide', true);		
-	}	
-	//TODO:  this doesn't work; conflict w/ backbone
-	// else{
-	// 	var l = Lists.findOne(Session.get('list_id'));
-	// 	if (l && l.showGuide == true){
-	// 		Session.set('showGuide', true);		
-	// 	}
-	// 	else{
-	// 		Session.set('showGuide', false);
-	// 	}		
-	// }
-	
-	//
-	//subscribe to the list collection by list id only
-	Router.setList(Session.get('list_id'));	
-
-	Deps.autorun(function () {
-		Meteor.subscribe('things', Session.get('list_id'));	
-	});			
 });
 
 

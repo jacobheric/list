@@ -19,7 +19,7 @@ Lists.allow({
 		return true;
 	},
 	update: function() {
-		return false;
+		return true;
 	},
 	remove: function() {
 		return false;
