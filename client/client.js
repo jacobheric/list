@@ -29,7 +29,7 @@ Deps.autorun(function () {
 	var list_id = Session.get('list_id');
 	
 	if (list_id) {
-		thingsHandle = Meteor.subscribe('things', Session.get('list_id'));
+		thingsHandle = Meteor.subscribe('things', list_id);
 	}
 	else {
 		thingsHandle = null;
@@ -46,8 +46,6 @@ Template.list.things = function () {
 		{list_id: Session.get('list_id')}, 
 		{sort: {name: 1}}	
 	);
-	
- x;
 };
 
 Template.list.showGuide = function () {
@@ -68,7 +66,7 @@ Template.list.events = {
 			
 			var th = Things.findOne({list_id: Session.get('list_id'), name: n});			
 			if (!th){
-				Things.insert({list_id: Session.get('list_id'), name: n});				
+				Things.insert({list_id: Session.get('list_id'), name: n, struck: false});				
 				//
 				//This is too laggy, revisit security
 				//Meteor.call('createListItem', 
@@ -106,11 +104,16 @@ Template.thing.rendered = function(template){
 	var id = this.data._id;
 	if (element) {
 		Hammer(element).on("dragleft", dragLeft);
+		Hammer(element).on("dragright", dragRight);
 	}
 }
 
 var removeItem = function(id){
 	Meteor.call('removeListItem', id);
+}
+
+var strikeItem = function(id){
+	Things.update(id, {$set: {struck: true}});		
 }
 
 var dragLeft = function(ev, id){
@@ -130,6 +133,43 @@ var dragLeft = function(ev, id){
 	}
 				
 	removeItem(docId);
+}
+
+var dragRight = function(ev, id){
+	var touches = ev.gesture.touches;
+	ev.gesture.preventDefault();
+	//
+	//Hokey: current doc id is bound to dom el id 
+	//cause we don't have it in this contex
+	var docId = ev.target.id;
+	
+	//
+	//TODO: Needs work
+	// var target;
+	// 
+	// for (var t = 0, len = touches.length; t < len; t++) {
+	// 	target = $(touches[t].target);
+	// 	target.css({
+	// 		left: touches[t].pageX+5
+	// 	});		
+	// 	
+	// }
+	// //Hokey, maybe an animation would be better
+	// setTimeout( function(){
+	// 	target.css({
+	// 		left: ''
+	// 	});		
+	// 	return;
+	// }, 100);
+		
+	strikeItem(docId);	
+}
+
+var resetLeft = function(target){
+	target.css({
+		left: ''
+	});		
+	return;
 }
 
 var ListRouter = Backbone.Router.extend({

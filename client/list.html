@@ -29,7 +29,11 @@
 		<img class="deleteImage" src="/icons/delete_mobile.png" height="38" alt="Delete. Or just drag "/>
 	</div>
 	<div class="thingContainer">
-		<div class="name" id="{{_id}}">{{name}}</div>
+		{{#if struck}}		
+			<div class="name struck" id="{{_id}}">{{name}}</div>
+		{{else}}
+			<div class="name" id="{{_id}}">{{name}}</div>
+		{{/if}}
 	</div>
 </template>
 

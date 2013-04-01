@@ -37,6 +37,10 @@ a {
 	border-style: none;
 }
 
+.struck {
+	text-decoration: line-through;	
+}
+
 .delete {
 	float: left;
 	border-style: none dashed none none;
@@ -54,7 +58,6 @@ a {
 	color: #777;
 }
 
-
 @media screen and (max-width: 480px)  
 {
 	.delete { display: none; }
@@ -65,9 +68,31 @@ a {
 	}
 }
 
-##All below for stupid moving guide to swiping left to delete##
-.animated{-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;-ms-animation-fill-mode:both;-o-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-duration:1s;-moz-animation-duration:1s;-ms-animation-duration:1s;-o-animation-duration:1s;animation-duration:1s;}.animated.hinge{-webkit-animation-duration:2s;-moz-animation-duration:2s;-ms-animation-duration:2s;-o-animation-duration:2s;animation-duration:2s;}@-webkit-keyframes shake {
-	0%, 100% {-webkit-transform: translateX(0);}	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}
+##All below for stupid moving guide to swiping##
+.animated{
+	-webkit-animation-fill-mode:both;
+	-moz-animation-fill-mode:both;
+	-ms-animation-fill-mode:both;
+	-o-animation-fill-mode:both;
+	animation-fill-mode:both;
+	-webkit-animation-duration:1s;
+	-moz-animation-duration:1s;
+	-ms-animation-duration:1s;
+	-o-animation-duration:1s;
+	animation-duration:1s;
+}
+
+.animated.hinge{
+	-webkit-animation-duration:2s;
+	-moz-animation-duration:2s;
+	-ms-animation-duration:2s;
+	-o-animation-duration:2s;
+	animation-duration:2s;
+}
+
+@-webkit-keyframes shake {
+	0%, 100% {-webkit-transform: translateX(0);}	
+	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}
 	20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);}
 }
 
@@ -94,9 +119,7 @@ a {
 	-moz-animation-name: shake;
 	-o-animation-name: shake;
 	animation-name: shake;
-    position: relative;
     -webkit-animation-duration: 2s;
     -webkit-animation-delay: 1s;
     -webkit-animation-iteration-count: 1;	
 }
-
