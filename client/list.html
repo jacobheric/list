@@ -25,9 +25,12 @@
 </template>
 
 <template name="thing">
-	<div class="delete">
-		<img class="deleteImage" src="/icons/delete_mobile.png" height="38" alt="Delete. Or just drag "/>
+	<div class="delete" title="Delete">
+		<a title="Delete">&#8855;</a>
 	</div>
+	<div class="strike" title="Strike">
+		<a title="Strike">&#8856;</a>
+	</div>	
 	<div class="thingContainer">
 		{{#if struck}}		
 			<div class="name struck" id="{{_id}}">{{name}}</div>

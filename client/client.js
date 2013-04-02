@@ -76,10 +76,13 @@ Template.list.events = {
 			element.value = '';
 		}
 	},
-	'click .delete': function() {
+	'click div.delete': function(event, template) {
 		removeItem(this._id);
 	},
-	'click .name': function(event, template){
+	'click div.strike': function(event, template) {
+		strikeItem(this._id);
+	},	
+	'click div.thingContainer': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');
@@ -154,7 +157,7 @@ var dragRight = function(ev, id){
 	// 	});		
 	// 	
 	// }
-	// //Hokey, maybe an animation would be better
+	// //Maybe an animation would be better
 	// setTimeout( function(){
 	// 	target.css({
 	// 		left: ''
