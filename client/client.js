@@ -18,26 +18,21 @@ var listsHandle = Meteor.subscribe('lists', function () {
 		var id = Lists.insert({showGuide: true});
 		Session.set('list_id', id);
 		Session.set('showGuide', true);
-		
-		if (id) {
-			Router.setList(id);
-		}
+		Router.setList(id);
 	}
 });
 
 Deps.autorun(function () {
 	var list_id = Session.get('list_id');
+	var	thingsHandle = null;
 	
 	if (list_id) {
 		thingsHandle = Meteor.subscribe('things', list_id);
 	}
-	else {
-		thingsHandle = null;
-	}
 });
 
 Template.list.loading = function () {
-  return !listsHandle.ready();
+	return !listsHandle.ready();
 };
 
 
@@ -176,19 +171,20 @@ var resetLeft = function(target){
 }
 
 var ListRouter = Backbone.Router.extend({
-  routes: {
-    ":list_id": "main"
-  },
-  main: function (list_id) {
-    var oldList = Session.get("list_id");
-    if (oldList !== list_id) {
-      Session.set("list_id", list_id);
-    }
-  },
-  setList: function (list_id) {
-    this.navigate(list_id, true);
-  }
+	routes: {
+		":list_id": "main"
+	},
+	main: function(list_id) {
+		var oldList = Session.get("list_id");
+		if (oldList !== list_id) {
+			Session.set("list_id", list_id);
+		}
+	},
+	setList: function(list_id) {
+		this.navigate(list_id, true);
+	}
 });
+
 
 Router = new ListRouter;
 
