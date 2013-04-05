@@ -56,7 +56,7 @@ Template.list.events = {
 				return;
 			}
 			
-			n = n.toLowerCase().substring(0, 125).trim();			
+			n = n.toLowerCase().substring(0, 125);			
 			
 			var th = Things.findOne({list_id: Session.get('list_id'), name: n});			
 			if (!th){
@@ -76,7 +76,7 @@ Template.list.events = {
 	'click div.strike': function(event, template) {
 		strikeItem(this._id);
 	},	
-	'click div.nameContainer': function(event, template){
+	'click div.thingContainer': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');
@@ -97,7 +97,7 @@ Template.guide.events = {
 
 Template.thing.rendered = function(template){
 	
-	var element = this.find('.nameContainer');
+	var element = this.find('.thingContainer');
 	var id = this.data._id;
 	if (element) {
 		Hammer(element).on("dragleft", dragLeft);
