@@ -1,13 +1,13 @@
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 200;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 200;
 	font-size: 2.5em;
-    padding: 0;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+	padding: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;
@@ -21,10 +21,6 @@ a {
 	border-color: #333;
 }
 
-#outer {
-	margin: 0 auto; 
-}
-
 .thingInput {
 	vertical-align: text-top !important;
 	box-sizing: border-box !important;
@@ -32,9 +28,17 @@ a {
 	width: 100% !important;
 }
 
-.thingContainer .name {	
-	border-style: none;
-	height: 55px;
+.thingContainer{	
+	clear: left;
+	border-bottom-style: dashed;
+	border-bottom-width: 2px;
+	border-bottom-color: #ccc;
+}
+
+.control {
+	border-right-style: dashed;
+	border-right-width: 2px;
+	border-right-color: #ccc;	
 }
 
 .struck {
@@ -43,36 +47,24 @@ a {
 
 .delete {
 	float: left;
-	border-style: none dashed none none;
-	border-color: #ccc;
-	border-width: 2px;
 	padding-right: 5px;
 	margin-right: 5px;	
 }
 
 .strike {
 	float: left;
-	border-style: none dashed none none;
-	border-color: #ccc;
-	border-width: 2px;
 	padding-right: 5px;
 	margin-right: 5px;	
 }
 
 .delete a {
-	color: inherit;
 	text-decoration: none;
 	border-style: none;
 }
 
 .strike a {
-	color: inherit;
 	text-decoration: none;
 	border-style: none;
-}
-
-.deleteImage {
-	vertical-align: middle;	
 }
 
 .none {
@@ -141,7 +133,7 @@ a {
 	-moz-animation-name: shake;
 	-o-animation-name: shake;
 	animation-name: shake;
-    -webkit-animation-duration: 2s;
-    -webkit-animation-delay: 1s;
-    -webkit-animation-iteration-count: 1;	
+	-webkit-animation-duration: 2s;
+	-webkit-animation-delay: 1s;
+	-webkit-animation-iteration-count: 1;	
 }

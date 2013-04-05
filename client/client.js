@@ -56,11 +56,11 @@ Template.list.events = {
 				return;
 			}
 			
-			n = n.toLowerCase().substring(0, 125);			
+			n = n.toLowerCase().substring(0, 125).trim();
 			
 			var th = Things.findOne({list_id: Session.get('list_id'), name: n});			
 			if (!th){
-				Things.insert({list_id: Session.get('list_id'), name: n, struck: false});				
+				Things.insert({list_id: Session.get('list_id'), name: n, struck: false}, function(){element.value = ''; element.focus();});				
 				//
 				//This is too laggy, revisit security
 				//Meteor.call('createListItem', 
@@ -68,6 +68,13 @@ Template.list.events = {
 				//);
 			}			
 			element.value = '';
+			//
+			//Android is not cooperating
+			//TODO: find real solution
+			if (navigator.userAgent.toLowerCase().indexOf("android") > -1){
+				element.blur();
+			}
+			element.focus();
 		}
 	},
 	'click div.delete': function(event, template) {
@@ -76,7 +83,7 @@ Template.list.events = {
 	'click div.strike': function(event, template) {
 		strikeItem(this._id);
 	},	
-	'click div.thingContainer': function(event, template){
+	'click div.nameContainer': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');
