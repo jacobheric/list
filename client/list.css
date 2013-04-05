@@ -1,16 +1,20 @@
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 200;
-	font-size: 2.5em;
-    padding: 0;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 2.25em;
+	font-weight: 200;
+	padding: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;
+	box-sizing: border-box;	
+}
+
+#outer {
+	margin: 0 auto; 
 }
 
 a {
@@ -21,42 +25,36 @@ a {
 	border-color: #333;
 }
 
-#outer {
-	margin: 0 auto; 
-}
-
 .thingInput {
+	box-sizing: border-box !important;	
 	vertical-align: text-top !important;
-	box-sizing: border-box !important;
 	font-size: .75em !important;
 	width: 100% !important;
 }
 
-.thingContainer .name {	
-	border-style: none;
-	height: 55px;
+.thingContainer {
+	clear: left;
+	border-bottom-style: dashed;
+	border-bottom-width: 2px;
+	border-bottom-color: #ccc;
 }
 
-.struck {
-	text-decoration: line-through;	
+.control {
+	border-right-style: dashed;
+	border-right-width: 2px;
+	border-right-color: #ccc;	
 }
 
 .delete {
 	float: left;
-	border-style: none dashed none none;
-	border-color: #ccc;
-	border-width: 2px;
+	margin-right: 5px;
 	padding-right: 5px;
-	margin-right: 5px;	
 }
 
 .strike {
 	float: left;
-	border-style: none dashed none none;
-	border-color: #ccc;
-	border-width: 2px;
-	padding-right: 5px;
-	margin-right: 5px;	
+	margin-right: 5px;
+	padding-right: 5px;	
 }
 
 .delete a {
@@ -71,8 +69,8 @@ a {
 	border-style: none;
 }
 
-.deleteImage {
-	vertical-align: middle;	
+.struck {
+	text-decoration: line-through;	
 }
 
 .none {
