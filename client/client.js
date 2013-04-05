@@ -1,4 +1,3 @@
-Meteor.subscribe("lists");	
 // show guide is false by default
 Session.setDefault('showGuide', false);
 
