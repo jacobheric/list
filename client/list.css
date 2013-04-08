@@ -67,14 +67,19 @@ a {
 	border-style: none;
 }
 
+.guide {
+	display: none;
+}
+
 .none {
 	color: #777;
 }
 
-@media screen and (max-width: 480px)  
+@media screen and (max-device-width: 480px)
 {
 	.delete { display: none; }
 	.strike { display: none; }
+	.guide { display: block; }
 	.thingContainer{
 		border-style: none none dashed none;
 		border-color: #ccc;
