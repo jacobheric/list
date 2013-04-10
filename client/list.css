@@ -75,7 +75,10 @@ a {
 	color: #777;
 }
 
-@media screen and (max-device-width: 480px)
+@media screen and (max-device-width: 800px), 
+	(device-aspect-ratio: 3/4), 
+	(device-aspect-ratio: 40/71), 
+	(device-aspect-ratio: 2/3)
 {
 	.delete { display: none; }
 	.strike { display: none; }
