@@ -84,6 +84,14 @@ Template.thing.helpers({
 	}
 });
 
+Template.guide.helpers({
+	url: function() {
+		//
+		//TODO: get host & schema properly
+		return "http://list.jacobheric.com/" + Backbone.history.fragment;
+	}
+});
+
 
 Template.thing.rendered = function(template){
 	

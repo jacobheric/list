@@ -60,9 +60,10 @@ a {
 	clear: left;
 }
 
-.guide {
+.instructions {
 	display: none;
 }
+
 
 .none {
 	color: #777;
@@ -71,11 +72,30 @@ a {
 @media screen and (max-device-width: 800px), 
 	(device-aspect-ratio: 3/4), 
 	(device-aspect-ratio: 40/71), 
-	(device-aspect-ratio: 2/3)
-{
+	(device-aspect-ratio: 2/3){
+		
 	.delete { display: none; }
 	.strike { display: none; }
-	.guide { display: block; }
+	
+	.instructions{
+		display: block;
+		padding: 0px 5px 5px 5px;
+		color: #777;		
+		font-size: .75em;
+	}
+	
+	.instructions input {
+		text-align: right;
+		font-size: .75em;
+	}
+	
+	.guide { 
+		margin: 0px 0px 5px 0px;		
+		border-bottom-style: dashed;
+		border-bottom-width: 2px;
+		border-bottom-color: #ccc;
+	}
+	
 	.thingContainer{
 		border-style: none none dashed none;
 		border-color: #ccc;
