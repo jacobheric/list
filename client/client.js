@@ -50,31 +50,7 @@ Template.list.events = {
 	'keyup input.thingInput': function(event, template) {
 		if (event.keyCode === 13){ 
 			var element = event.target;
-			var n = element.value;	
-					
-			if (!n || n == ''){
-				return;
-			}
-			
-			n = n.toLowerCase().substring(0, 125).trim();
-			
-			var th = Things.findOne({list_id: Session.get('list_id'), name: n});			
-			if (!th){
-				Things.insert({list_id: Session.get('list_id'), name: n, struck: false}, function(){element.value = ''; element.focus();});				
-				//
-				//This is too laggy, revisit security
-				//Meteor.call('createListItem', 
-				//	{list_id: Session.get('list_id'), name: n}
-				//);
-			}			
-			element.value = '';
-			//
-			//Android is not cooperating
-			//TODO: find real solution
-			if (navigator.userAgent.toLowerCase().indexOf("android") > -1){
-				element.blur();
-			}
-			element.focus();
+			addItem(element);
 		}
 	},
 	'click div.delete': function(event, template) {
@@ -95,7 +71,7 @@ Template.list.events = {
 
 Template.guide.events = {
 	'click': function(event, template) {
-		var element = template.find('.guide');		
+		var element = template.find('.guide');
 		element.style.display = 'none';	
 		Lists.update(Session.get('list_id'), {$set: {showGuide: false}});
 		Session.set('showGuide', false);	
@@ -110,6 +86,24 @@ Template.thing.rendered = function(template){
 		Hammer(element).on("dragleft", dragLeft);
 		Hammer(element).on("dragright", dragRight);
 	}
+}
+
+var addItem = function(element){
+	element.blur();	
+	var n = element.value;	
+
+	if (!n || n == ''){
+		return;
+	}
+	
+	n = n.toLowerCase().substring(0, 125).trim();
+	
+	var th = Things.findOne({list_id: Session.get('list_id'), name: n});
+	if (!th){
+		Things.insert({list_id: Session.get('list_id'), name: n, struck: false});
+	}			
+	element.value = '';
+	element.focus();
 }
 
 var removeItem = function(id){
