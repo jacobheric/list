@@ -59,7 +59,7 @@ Template.list.events = {
 	'click a.strike': function(event, template) {
 		strikeItem(this._id);
 	},	
-	'click span.name': function(event, template){
+	'click .nameContainer': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');

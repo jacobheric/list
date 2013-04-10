@@ -28,7 +28,7 @@
 	<div class="thingContainer" id="{{_id}}">
 		<a class="control delete" title="Delete">&#8855;</a>
 		<a class="control strike" title="Strike">&#8856;</a>
-		<span class="name {{nameStyle}}">{{name}}</span>
+		<div class="nameContainer"><span class="name {{nameStyle}}">{{name}}</span></div>
 	</div>	
 	</template>
 
@@ -38,6 +38,9 @@
 		<!-- <div class="guide">
 			<span>&hearts;share list <a target="_new" href="mailto:''?Subject=Let's share a list: {{url}}">url</a></span>
 		</div>	 -->	
+		<div class="guide">
+			<span>&hearts;share list url</span>
+		</div>
 		<div class="guide">
 			<span>&larr;drag to delete</span>
 		</div>
