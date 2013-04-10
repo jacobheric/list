@@ -53,13 +53,13 @@ Template.list.events = {
 			addItem(element);
 		}
 	},
-	'click div.delete': function(event, template) {
+	'click a.delete': function(event, template) {
 		removeItem(this._id);
 	},
-	'click div.strike': function(event, template) {
+	'click a.strike': function(event, template) {
 		strikeItem(this._id);
 	},	
-	'click div.nameContainer': function(event, template){
+	'click span.name': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');
@@ -77,6 +77,13 @@ Template.guide.events = {
 		Session.set('showGuide', false);	
 	}
 };
+
+Template.thing.helpers({
+	nameStyle: function() {
+		return this.struck ? 'struck' : '';
+	}
+});
+
 
 Template.thing.rendered = function(template){
 	
@@ -117,10 +124,6 @@ var strikeItem = function(id){
 var dragLeft = function(ev, id){
 	var touches = ev.gesture.touches;
 	ev.gesture.preventDefault();
-	//
-	//Hokey: current doc id is bound to dom el id 
-	//cause we don't have it in this contex
-	var docId = ev.target.id;
 
 	for (var t = 0, len = touches.length; t < len; t++) {
 		var target = $(touches[t].target);
@@ -130,7 +133,7 @@ var dragLeft = function(ev, id){
 		});
 	}
 				
-	removeItem(docId);
+	removeItem(this.id);
 }
 
 var dragRight = function(ev, id){
@@ -160,7 +163,7 @@ var dragRight = function(ev, id){
 	// 	return;
 	// }, 100);
 		
-	strikeItem(docId);	
+	strikeItem(this.id);	
 }
 
 var resetLeft = function(target){
