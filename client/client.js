@@ -78,6 +78,7 @@ Template.guide.events = {
 	}
 };
 
+
 Template.thing.helpers({
 	nameStyle: function() {
 		return this.struck ? 'struck' : '';
@@ -94,12 +95,19 @@ Template.guide.helpers({
 
 
 Template.thing.rendered = function(template){
-	
+	//var dragOptions = {drag_block_horizontal: true, drag_max_touches: 1, drag_lock_to_axis: true};
 	var element = this.find('.thingContainer');
 	var id = this.data._id;
 	if (element) {
-		Hammer(element).on("dragleft", dragLeft);
-		Hammer(element).on("dragright", dragRight);
+		var selector = '#' + id;
+
+		$(selector).bind('pullleft', function(event, data) {
+			dragLeft(event, data);
+		});
+		
+		$(selector).bind('pullright', function(event, data) {
+			dragRight(event, data);
+		});
 	}
 }
 
@@ -122,63 +130,27 @@ var addItem = function(element){
 }
 
 var removeItem = function(id){
-	Meteor.call('removeListItem', id);
+	Things.remove(id);
 }
 
 var strikeItem = function(id){
 	Things.update(id, {$set: {struck: true}});		
 }
 
-var dragLeft = function(ev, id){
-	var touches = ev.gesture.touches;
-	ev.gesture.preventDefault();
-
-	for (var t = 0, len = touches.length; t < len; t++) {
-		var target = $(touches[t].target);
-		
-		target.css({
-			left: touches[t].pageX - 250
-		});
-	}
-				
-	removeItem(this.id);
+//
+//TODO: revisit touch/drag instead of animation (not playing nice with meteor)
+var dragLeft = function(event, data){
+	//$(event.currentTarget).addClass('animated fadeOutLeft');
+	//setTimeout(function(){Things.remove(event.currentTarget.id)}, 500);
+	Things.remove(event.currentTarget.id);
 }
 
-var dragRight = function(ev, id){
-	var touches = ev.gesture.touches;
-	ev.gesture.preventDefault();
-	//
-	//Hokey: current doc id is bound to dom el id 
-	//cause we don't have it in this contex
-	var docId = ev.target.id;
-	
-	//
-	//TODO: Needs work
-	// var target;
-	// 
-	// for (var t = 0, len = touches.length; t < len; t++) {
-	// 	target = $(touches[t].target);
-	// 	target.css({
-	// 		left: touches[t].pageX+5
-	// 	});		
-	// 	
-	// }
-	// //Maybe an animation would be better
-	// setTimeout( function(){
-	// 	target.css({
-	// 		left: ''
-	// 	});		
-	// 	return;
-	// }, 100);
-		
-	strikeItem(this.id);	
-}
-
-var resetLeft = function(target){
-	target.css({
-		left: ''
-	});		
-	return;
+//
+//TODO: revisit touch/drag instead of animation (not playing nice with meteor)
+var dragRight = function(event, data){
+	//$(event.currentTarget).addClass('animated fadeOutRight');
+	//setTimeout(function(){strikeItem(event.currentTarget.id)}, 500);
+	strikeItem(event.currentTarget.id);	
 }
 
 var ListRouter = Backbone.Router.extend({
