@@ -95,20 +95,36 @@ Template.guide.helpers({
 
 
 Template.thing.rendered = function(template){
-	//var dragOptions = {drag_block_horizontal: true, drag_max_touches: 1, drag_lock_to_axis: true};
-	var element = this.find('.thingContainer');
-	var id = this.data._id;
-	if (element) {
-		var selector = '#' + id;
+	var dragOptions = {
+		drag_block_horizontal: true,
+		drag_lock_to_axis: true,
+		drag_max_touches: 1,
+		prevent_default: true,
+		scale_treshold: 0,
+		drag_min_distance: 0,
+		css_hacks: false,
+		stop_browser_behavior: {
+			userselect: false
+		}
+	};
+	
+	$('.thingContainer').hammer(dragOptions).on("dragleft", function(event) {
+		event.gesture.preventDefault();
+		event.stopPropagation();		
+		if (Things.findOne(event.currentTarget.id)){
+			Things.remove(event.currentTarget.id);	
+			//
+			//Remove hammer event, they linger upon meteor rerender (ghost event!)
+			$(event.currentTarget).hammer().off("dragleft");
+		}		
+	});	
 
-		$(selector).bind('pullleft', function(event, data) {
-			dragLeft(event, data);
-		});
-		
-		$(selector).bind('pullright', function(event, data) {
-			dragRight(event, data);
-		});
-	}
+	$('.thingContainer').hammer(dragOptions).on("dragright", function(event) {
+		event.gesture.preventDefault();
+		event.stopPropagation();
+		strikeItem(event.currentTarget.id);
+	});
+	
 }
 
 var addItem = function(element){
@@ -135,22 +151,6 @@ var removeItem = function(id){
 
 var strikeItem = function(id){
 	Things.update(id, {$set: {struck: true}});		
-}
-
-//
-//TODO: revisit touch/drag instead of animation (not playing nice with meteor)
-var dragLeft = function(event, data){
-	//$(event.currentTarget).addClass('animated fadeOutLeft');
-	//setTimeout(function(){Things.remove(event.currentTarget.id)}, 500);
-	Things.remove(event.currentTarget.id);
-}
-
-//
-//TODO: revisit touch/drag instead of animation (not playing nice with meteor)
-var dragRight = function(event, data){
-	//$(event.currentTarget).addClass('animated fadeOutRight');
-	//setTimeout(function(){strikeItem(event.currentTarget.id)}, 500);
-	strikeItem(event.currentTarget.id);	
 }
 
 var ListRouter = Backbone.Router.extend({
