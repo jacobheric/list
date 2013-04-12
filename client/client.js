@@ -70,7 +70,7 @@ Template.list.events = {
 };
 
 Template.guide.events = {
-	'click': function(event, template) {
+	'click input': function(event, template) {
 		var element = template.find('.guide');
 		element.style.display = 'none';	
 		Lists.update(Session.get('list_id'), {$set: {showGuide: false}});
