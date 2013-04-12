@@ -75,6 +75,9 @@ Template.guide.events = {
 		element.style.display = 'none';	
 		Lists.update(Session.get('list_id'), {$set: {showGuide: false}});
 		Session.set('showGuide', false);	
+	}, 
+	'click a': function(event, template){
+		return;
 	}
 };
 
@@ -86,10 +89,16 @@ Template.thing.helpers({
 });
 
 Template.guide.helpers({
-	url: function() {
-		//
-		//TODO: get host & schema properly
-		return "http://list.jacobheric.com/" + Backbone.history.fragment;
+	url: function(){
+		return window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
+	},
+	//
+	//TODO: send actual email instead of using anchor mailto
+	emailBody: function(){
+		var url = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
+		return '%0AI\'ve%20created%20a%20list%20that%20we%20can%20share.%20%20' + 	
+		'We\'ll%20both%20see%20the%20items%20we%20add%2Fremove%20from%20the%20list%20in%20realtime.' + 	
+		'%20%20Check%20it%20out%20here%3A%20%20' + url;
 	}
 });
 
