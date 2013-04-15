@@ -104,18 +104,7 @@ Template.guide.helpers({
 
 
 Template.thing.rendered = function(template){
-	var dragOptions = {
-		drag_block_horizontal: true,
-		drag_lock_to_axis: true,
-		drag_max_touches: 1,
-		prevent_default: true,
-		scale_treshold: 0,
-		drag_min_distance: 0,
-		css_hacks: false,
-		stop_browser_behavior: {
-			userselect: false
-		}
-	};
+	var dragOptions = {};
 	
 	$('.thingContainer').hammer(dragOptions).on("dragleft", function(event) {
 		event.gesture.preventDefault();

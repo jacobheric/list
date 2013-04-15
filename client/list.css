@@ -23,10 +23,6 @@ a {
 	position: relative;
 }
 
-.nameContainer {
-	position: static;	
-}
-
 .thingInput {
 	vertical-align: text-top !important;
 	box-sizing: border-box !important;
