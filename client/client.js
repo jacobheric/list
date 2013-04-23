@@ -109,9 +109,7 @@ Template.thing.rendered = function(template){
 	var element = this.find('.thingContainer');
 		
 	Hammer(element).on("dragleft", dragLeft);
-	//TODO: figure out how to reset style after drag is complete to restore motion
-	//Hammer(element).on("dragright", dragRight);	
-	
+		
 	Hammer(element, dragOptions).on("dragend", function(event) {
 		event.gesture.preventDefault();
 		event.stopPropagation();	
