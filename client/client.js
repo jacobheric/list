@@ -108,7 +108,7 @@ Template.thing.rendered = function(template){
 	var dragOptions = {};
 	var element = this.find('.thingContainer');
 		
-	Hammer(element).on("dragleft", dragLeft);
+	//Hammer(element).on("dragleft", dragLeft);
 		
 	Hammer(element, dragOptions).on("dragend", function(event) {
 		event.gesture.preventDefault();
