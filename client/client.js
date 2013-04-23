@@ -106,23 +106,36 @@ Template.guide.helpers({
 Template.thing.rendered = function(template){
 	var dragOptions = {};
 	
-	$('.thingContainer').hammer(dragOptions).on("dragleft", function(event) {
+	$('.thingContainer').hammer(dragOptions).on("dragend", function(event) {
 		event.gesture.preventDefault();
-		event.stopPropagation();		
-		if (Things.findOne(event.currentTarget.id)){
+		event.stopPropagation();	
+		//
+		//Don't operate on deleted options
+		if (!Things.findOne(event.currentTarget.id)){
+			return;
+		}	
+		
+		if (event.gesture.direction == 'left'){
 			Things.remove(event.currentTarget.id);	
-			//
-			//Remove hammer event, they linger upon meteor rerender (ghost event!)
-			$(event.currentTarget).hammer().off("dragleft");
 		}		
+		else if (event.gesture.direction == 'right'){
+			strikeItem(event.currentTarget.id);			
+		}
 	});	
-
-	$('.thingContainer').hammer(dragOptions).on("dragright", function(event) {
-		event.gesture.preventDefault();
-		event.stopPropagation();
-		strikeItem(event.currentTarget.id);
-	});
 	
+}
+
+var dragLeft = function(ev){
+	var touches = ev.gesture.touches;
+	ev.gesture.preventDefault();
+
+	for (var t = 0, len = touches.length; t < len; t++) {
+		var target = $(touches[t].target);
+
+		target.css({
+			left: touches[t].pageX - 250
+		});
+	}
 }
 
 var addItem = function(element){
