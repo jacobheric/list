@@ -99,6 +99,10 @@ a {
 		border-color: #ccc;
 		border-width: 2px;		
 	}
+	
+	.nameContainer{
+		position: relative;
+	}	
 }
 
 

@@ -57,7 +57,8 @@ Template.list.events = {
 		removeItem(this._id);
 	},
 	'click a.strike': function(event, template) {
-		strikeItem(this._id);
+		//Toggle struck
+		strikeItem(this._id, !Things.findOne(this._id).struck);
 	},	
 	'click .nameContainer': function(event, template){
 		//
@@ -105,13 +106,19 @@ Template.guide.helpers({
 
 Template.thing.rendered = function(template){
 	var dragOptions = {};
+	var element = this.find('.thingContainer');
+		
+	Hammer(element).on("dragleft", dragLeft);
+	//TODO: figure out how to reset style after drag is complete to restore motion
+	//Hammer(element).on("dragright", dragRight);	
 	
-	$('.thingContainer').hammer(dragOptions).on("dragend", function(event) {
+	Hammer(element, dragOptions).on("dragend", function(event) {
 		event.gesture.preventDefault();
 		event.stopPropagation();	
 		//
 		//Don't operate on deleted options
-		if (!Things.findOne(event.currentTarget.id)){
+		var t = Things.findOne(event.currentTarget.id);
+		if (!t){
 			return;
 		}	
 		
@@ -119,7 +126,7 @@ Template.thing.rendered = function(template){
 			Things.remove(event.currentTarget.id);	
 		}		
 		else if (event.gesture.direction == 'right'){
-			strikeItem(event.currentTarget.id);			
+			strikeItem(event.currentTarget.id, !t.struck);			
 		}
 	});	
 	
@@ -160,8 +167,8 @@ var removeItem = function(id){
 	Things.remove(id);
 }
 
-var strikeItem = function(id){
-	Things.update(id, {$set: {struck: true}});		
+var strikeItem = function(id, t){
+	Things.update(id, {$set: {struck: t}});		
 }
 
 var ListRouter = Backbone.Router.extend({
