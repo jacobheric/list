@@ -26,9 +26,10 @@ a {
 .thingInput {
 	vertical-align: text-top !important;
 	box-sizing: border-box !important;
-	font-size: .75em !important;
+	font-size: .8em !important;
+	font-weight: bold;	
 	width: 100% !important;
-	height: 40px;
+	height: 40px;	
 }
 
 .thingContainer{
@@ -38,8 +39,9 @@ a {
 	border-bottom-style: dashed;
 	border-bottom-width: 2px;
 	border-bottom-color: #ccc;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	font-weight: bold;
 }
 
 .control {
@@ -50,7 +52,7 @@ a {
 	border-style: none;	
 	border-right-style: dashed;
 	border-right-width: 2px;
-	border-right-color: #ccc;
+	border-right-color: #ccc;	
 }
 
 .struck {
@@ -58,7 +60,7 @@ a {
 }
 
 .delete {
-	clear: left;
+	clear: left;	
 }
 
 .instructions {
