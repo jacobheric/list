@@ -8,6 +8,11 @@ Meteor.publish('things', function (id) {
   return Things.find({list_id: id});
 });
 
+// Publish all undo items for requested list_id.
+Meteor.publish('undo', function (id) {
+  return Undo.find({list_id: id});
+});
+
 
 Meteor.methods({
 	
