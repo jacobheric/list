@@ -1,5 +1,6 @@
-// show guide is false by default
+// show guide/undo false by default
 Session.setDefault('showGuide', false);
+Session.setDefault('showUndo', false);
 
 // Subscribe to 'lists' collection on startup.
 // Select a list once data has arrived.
@@ -18,21 +19,23 @@ var listsHandle = Meteor.subscribe('lists', function () {
 		Session.set('list_id', id);
 		Session.set('showGuide', true);
 		Router.setList(id);
-	}
+	}	
 });
 
 Deps.autorun(function () {
 	var list_id = Session.get('list_id');
-	var	thingsHandle = null;
+	var thingsHandle = null;
+	var undoHandle = null;
 	
 	if (list_id) {
 		thingsHandle = Meteor.subscribe('things', list_id);
-	}
+		undoHandle = Meteor.subscribe('undo', list_id, function(){
+			if (Undo.find({}).count() > 0){
+				Session.set('showUndo', true);
+			}
+		});		
+	}	
 });
-
-Template.list.loading = function () {
-	return !listsHandle.ready();
-};
 
 
 Template.list.things = function () {	
@@ -46,7 +49,14 @@ Template.list.showGuide = function () {
 	return Session.get('showGuide');
 };
 
+Template.list.showUndo = function () {
+	return Session.get('showUndo');
+};
+
 Template.list.events = {
+	'click div.undo': function(event, template) {
+		undoLast();
+	},	
 	'keyup input.thingInput': function(event, template) {
 		if (event.keyCode === 13){ 
 			var element = event.target;
@@ -54,18 +64,18 @@ Template.list.events = {
 		}
 	},
 	'click a.delete': function(event, template) {
-		removeItem(this._id);
+		removeThing(this._id);
 	},
 	'click a.strike': function(event, template) {
 		//Toggle struck
-		strikeItem(this._id, !Things.findOne(this._id).struck);
+		strikeThing(this._id, !Things.findOne(this._id).struck);
 	},	
 	'click .nameContainer': function(event, template){
 		//
 		//Editing is just drop/readd
 		var input = template.find('.thingInput');
-		input.value = event.target.textContent;
-		removeItem(this._id);
+		input.value = event.target.textContent;		
+		removeThing(this._id);
 		input.focus();
 	}	
 };
@@ -121,10 +131,10 @@ Template.thing.rendered = function(template){
 		}	
 		
 		if (event.gesture.direction == 'left'){
-			Things.remove(event.currentTarget.id);	
+			removeThing(event.currentTarget.id);	
 		}		
 		else if (event.gesture.direction == 'right'){
-			strikeItem(event.currentTarget.id, !t.struck);			
+			strikeThing(event.currentTarget.id, !t.struck);			
 		}
 	});	
 	
@@ -150,24 +160,11 @@ var addItem = function(element){
 	if (!n || n == ''){
 		return;
 	}
-	
-	n = n.toLowerCase().substring(0, 125).trim();
-	
-	var th = Things.findOne({list_id: Session.get('list_id'), name: n});
-	if (!th){
-		Things.insert({list_id: Session.get('list_id'), name: n, struck: false});
-	}			
+	insertThing({list_id: Session.get('list_id'), name: n, struck: false});	
 	element.value = '';
 	element.focus();
 }
 
-var removeItem = function(id){
-	Things.remove(id);
-}
-
-var strikeItem = function(id, t){
-	Things.update(id, {$set: {struck: t}});		
-}
 
 var ListRouter = Backbone.Router.extend({
 	routes: {
@@ -188,7 +185,7 @@ var ListRouter = Backbone.Router.extend({
 Router = new ListRouter;
 
 Meteor.startup(function () {		
-	Backbone.history.start({pushState: true});		
+	Backbone.history.start({pushState: true});			
 });
 
 

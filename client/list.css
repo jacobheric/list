@@ -1,7 +1,7 @@
 body {
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 200;
-	font-size: 1.5em;
+	font-size: 1.25em;
 	padding: 0;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -23,6 +23,14 @@ a {
 	position: relative;
 }
 
+.undo {
+	position:fixed; 
+	bottom:0; 
+	right:0; 
+	z-index: 999;
+	margin-right: 5px;
+}
+
 .thingInput {
 	vertical-align: text-top !important;
 	box-sizing: border-box !important;
@@ -39,8 +47,8 @@ a {
 	border-bottom-style: dashed;
 	border-bottom-width: 2px;
 	border-bottom-color: #ccc;
-	padding-top: 8px;
-	padding-bottom: 8px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	font-weight: bold;
 }
 
@@ -60,7 +68,7 @@ a {
 }
 
 .delete {
-	clear: left;	
+	clear: left;
 }
 
 .instructions {
