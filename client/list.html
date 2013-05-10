@@ -23,10 +23,11 @@
 </body>
 
 <template name="list">
-	{{#if loading}}
-		<div></div>
-	{{/if}}	
-	<input class="thingInput" type="text" maxlength="125"/>
+	
+	{{#constant}}
+		<input class="thingInput" type="text" maxlength="125"/>
+	{{/constant}}	
+
 	{{#if showGuide}}
 		{{>guide}}
 	{{/if}}	
@@ -35,6 +36,10 @@
 			{{> thing}}
 		{{/each}}
 	</div>
+	{{#if showUndo}}
+		{{>undo}}
+	{{/if}}	
+	
 </template>
 
 <template name="thing">	
@@ -42,6 +47,12 @@
 		<a class="control delete" title="Delete">&#8855;</a>
 		<a class="control strike" title="Strike">&#8856;</a>
 		<div class="nameContainer"><span class="name {{nameStyle}}">{{name}}</span></div>
+	</div>	
+</template>
+
+<template name="undo">
+	<div class="undo">
+		<img src="/icons/undo_small.png"/>
 	</div>	
 </template>
 
