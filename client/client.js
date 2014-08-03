@@ -115,43 +115,22 @@ Template.guide.helpers({
 
 
 Template.thing.rendered = function(template){
-	var dragOptions = {};
 	var element = this.find('.thingContainer');
-		
-	Hammer(element).on("dragleft", dragLeft);
-		
-	Hammer(element, dragOptions).on("dragend", function(event) {
-		event.gesture.preventDefault();
-		event.stopPropagation();	
-		//
-		//Don't operate on deleted options
-		var t = Things.findOne(event.currentTarget.id);
-		if (!t){
-			return;
-		}	
-		
-		if (event.gesture.direction == 'left'){
-			removeThing(event.currentTarget.id);	
-		}		
-		else if (event.gesture.direction == 'right'){
-			strikeThing(event.currentTarget.id, !t.struck);			
-		}
-	});	
-	
+
+    var hammer = Hammer(element);
+    hammer.on("swipeleft", function(event) {
+        removeThing(element.id);
+    });
+
+    hammer.on("swiperight", function(event) {
+        var t = Things.findOne(element.id);
+        if (!t){
+            return;
+        }
+        strikeThing(element.id, !t.struck);
+    });
 }
 
-var dragLeft = function(ev){
-	var touches = ev.gesture.touches;
-	ev.gesture.preventDefault();
-
-	for (var t = 0, len = touches.length; t < len; t++) {
-		var target = $(touches[t].target);
-
-		target.css({
-			left: touches[t].pageX - 250
-		});
-	}
-}
 
 var addItem = function(element){
 	element.blur();	
