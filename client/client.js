@@ -37,30 +37,43 @@ Deps.autorun(function () {
 	}	
 });
 
+Template.list.helpers({
+	things: function(){
+		return Things.find(
+			{list_id: Session.get('list_id')},
+			{sort: {name: 1}}
+		);
+	},
+	showGuide: function(){
+		return Session.get('showGuide');
+	},
+	showUndo: function(){
+		return Session.get('showUndo');
+	}
+})
 
-Template.list.things = function () {	
-	return Things.find(
-		{list_id: Session.get('list_id')}, 
-		{sort: {name: 1}}	
-	);
-};
-
-Template.list.showGuide = function () {
-	return Session.get('showGuide');
-};
-
-Template.list.showUndo = function () {
-	return Session.get('showUndo');
-};
+//Template.list.things = function () {
+//	return Things.find(
+//		{list_id: Session.get('list_id')},
+//		{sort: {name: 1}}
+//	);
+//};
+//
+//Template.list.showGuide = function () {
+//	return Session.get('showGuide');
+//};
+//
+//Template.list.showUndo = function () {
+//	return Session.get('showUndo');
+//};
 
 Template.list.events = {
 	'click div.undo': function(event, template) {
 		undoLast();
 	},	
 	'keyup input.thingInput': function(event, template) {
-		if (event.keyCode === 13){ 
-			var element = event.target;
-			addItem(element);
+		if (event.keyCode === 13){
+			addItem(event);
 		}
 	},
 	'click a.delete': function(event, template) {
@@ -132,14 +145,15 @@ Template.thing.rendered = function(template){
 }
 
 
-var addItem = function(element){
-	element.blur();	
-	var n = element.value;	
+var addItem = function(event){
+	event.preventDefault();
+	var element = event.target;
 
-	if (!n || n == ''){
+	if (!element.value || element.value === ''){
 		return;
 	}
-	insertThing({list_id: Session.get('list_id'), name: n, struck: false});	
+
+	insertThing({list_id: Session.get('list_id'), name: element.value, struck: false});
 	element.value = '';
 	element.focus();
 }
